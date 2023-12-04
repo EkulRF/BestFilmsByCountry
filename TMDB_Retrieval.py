@@ -2,7 +2,6 @@ import requests
 import pickle
 from tqdm import tqdm
 
-# Replace 'YOUR_API_KEY' with your TMDb API key
 api_key = '4fad2cdfc5ea0c55513d2d7cbe65f25e'
 base_url = 'https://api.themoviedb.org/3'
 
@@ -85,7 +84,6 @@ def sort_movies_by_country(original_dict):
 
     return sorted_dict
 
-# Example: Get the highest-rated movie in the US across multiple pages
 highest_rated_movies = get_highest_rated_movies(500)
 
 sorted = sort_movies_by_country(highest_rated_movies)
