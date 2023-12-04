@@ -2,7 +2,7 @@ import requests
 import pickle
 from tqdm import tqdm
 
-api_key = '4fad2cdfc5ea0c55513d2d7cbe65f25e'
+api_key = '[API Key]'
 base_url = 'https://api.themoviedb.org/3'
 
 def get_top_rated_movies_onpage(page):
