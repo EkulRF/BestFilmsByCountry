@@ -3,6 +3,3 @@
 
 # secrets
 /.env
-
-# data
-/countries.json
