@@ -38,9 +38,9 @@
       }
     </script>
     <script>
-      function buildImageUrl(path) {
+      function buildImageUrl(path, size = "w300") {
         let image_base = "https://image.tmdb.org/t/p/";
-        let image_size = "w300";
+        let image_size = size;
         return image_base + image_size + path;
       }
       $.getJSON("./countries.json", function (data) {
