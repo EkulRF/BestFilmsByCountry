@@ -9,6 +9,8 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# 4fad2cdfc5ea0c55513d2d7cbe65f25e
+
 api_key = os.environ["TMDB_KEY"]
 BASE_URL = "https://api.themoviedb.org/3"
 
