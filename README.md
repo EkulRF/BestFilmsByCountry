@@ -23,6 +23,57 @@ These both mean that for some countries, we get no data. This can be fixed later
 
 [top rated]: https://developer.themoviedb.org/reference/movie-top-rated-list
 
+### How to get movie images
+
+Each movie returns a `backdrop_path` and `poster_path`. Broadly, the backdrop is landscape, and the poster portrait. You can combine these with data from the [details API]
+
+[details API]: https://developer.themoviedb.org/reference/configuration-details
+
+```json
+{
+"base_url": "http://image.tmdb.org/t/p/",
+"secure_base_url": "https://image.tmdb.org/t/p/",
+"backdrop_sizes": [
+    "w300",
+    "w780",
+    "w1280",
+    "original"
+],
+"logo_sizes": [
+    "w45",
+    "w92",
+    "w154",
+    "w185",
+    "w300",
+    "w500",
+    "original"
+],
+"poster_sizes": [
+    "w92",
+    "w154",
+    "w185",
+    "w342",
+    "w500",
+    "w780",
+    "original"
+]
+}
+```
+
+So, for example, The Godfather's images could be, from
+
+```json
+{
+  "backdrop_path": "/tmU7GeKVybMWFButWEGl2M4GeiP.jpg",
+  "poster_path": "/3bhkrj58Vtu7enYsRolD1fZdja1.jpg",
+}
+```
+
+```text
+https://image.tmdb.org/t/p/original/tmU7GeKVybMWFButWEGl2M4GeiP.jpg
+https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg
+```
+
 ## Development
 
 ### Get API key
