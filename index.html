@@ -101,9 +101,26 @@
             if (top_movie == null) {
               return;
             }
-            let movie_name = top_movie["title"];
 
-            el.html(el.html() + " - " + movie_name);
+            let country_name = country["english_name"];
+
+            let movie_name = top_movie["title"];
+            let movie_poster = top_movie["poster_path"];
+            let poster_url = buildImageUrl(movie_poster, "original");
+
+            let html = `
+              <div class="tooltip">
+                <div class="tooltip-text">
+                  <h2>${country_name}</h2>
+                  <h3>${movie_name}</h3>
+                </div>
+                <div class="tooltip-image">
+                    <img src="${poster_url}" alt="${movie_name}" />
+                  </div>
+              </div>
+            `;
+
+            el.html(html);
           },
           onRegionClick: function (e, code) {
             let country = countries_by_code[code];

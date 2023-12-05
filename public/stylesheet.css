@@ -46,3 +46,18 @@ footer nav ul {
 footer nav ul li {
   margin: 0 1rem;
 }
+
+.jvectormap-tip.jvectormap-tip {
+  border: none;
+  background: #0008;
+  border-radius: 0.5rem;
+}
+
+.tooltip-image img {
+  width: 10rem;
+  height: auto;
+}
+
+.tooltip-text {
+  text-align: center;
+}
