@@ -8,20 +8,13 @@ Using [The Movie Database API](https://developer.themoviedb.org/reference/intro/
 
 Using the "discover" API from The Movie Database (TMDB) <`https://developer.themoviedb.org/reference/discover-movie`> with query parameters:
 
-| param | value | description |
+| parameter | value | description |
 | --- | --- | --- |
-| `sort_by` | `vote_average.desc` | sort by average vote (highest first) |
+| `sort_by` | `vote_average.desc` | sort by average vote (the highest first) |
 | `with_origin_country` | `${iso 3166 1 country code!}` | the country in question! |
-| `vote_count.gte` | 200 | More than 200 votes. This behaviour copies the [top rated] API behaviour |
+| `vote_count.gte` | variable | This behaviour copies the [top-rated] API behaviour. We start at 200, and step down to get less noisy results. |
 
-There are a few notes here:
-
-- Movies might not be tagged correctly, so we do not get them when asking for `with_origin_country`
-- Obscure countries could have no films above 200 votes
-
-These both mean that for some countries, we get no data. This can be fixed later (by selectively lowering `vote_count.gte`, for example).
-
-[top rated]: https://developer.themoviedb.org/reference/movie-top-rated-list
+[top-rated]: https://developer.themoviedb.org/reference/movie-top-rated-list
 
 ### How to get movie images
 
@@ -102,7 +95,7 @@ pip install -r requirements.txt
 python get_movies.py
 ```
 
-Data is saved to `countries.json`. A lot of countries do not have data (due to the way movies are fetched).
+Data is saved to `countries.json`. A few countries do not have data. See which ones by [running the script](#fetch-movie-data-from-tmdb-api).
 
 ```json
 [
