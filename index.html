@@ -38,6 +38,11 @@
       }
     </script>
     <script>
+      function buildImageUrl(path) {
+        let image_base = "https://image.tmdb.org/t/p/";
+        let image_size = "w300";
+        return image_base + image_size + path;
+      }
       $.getJSON("./countries.json", function (data) {
         let last_modified = data["last_modified"];
         let last_modified_date = new Date(last_modified);
@@ -68,7 +73,7 @@
           let movie_name = top_movie["title"];
           let code = country["iso_3166_1"];
           let backdrop_path = top_movie["backdrop_path"];
-          scale[movie_name] = image_base + image_size + backdrop_path;
+          scale[movie_name] = buildImageUrl(backdrop_path);
           values[code] = movie_name;
         }
 
