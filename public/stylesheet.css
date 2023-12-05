@@ -1,0 +1,63 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+body {
+  height: 100vh;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+footer nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+footer nav ul li {
+  margin: 0 1rem;
+}
+
+.jvectormap-tip.jvectormap-tip {
+  border: none;
+  background: #0008;
+  border-radius: 0.5rem;
+}
+
+.tooltip-image img {
+  width: 10rem;
+  height: auto;
+}
+
+.tooltip-text {
+  text-align: center;
+}

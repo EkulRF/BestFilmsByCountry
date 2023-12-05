@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Map!</title>
+    <link rel="stylesheet" href="./public/stylesheet.css" />
+    <link rel="stylesheet" href="./public/jquery-jvectormap-2.0.5.css" />
+    <script src="./public/jquery-3.7.1.min.js"></script>
+    <script src="./public/jquery-jvectormap-2.0.5.min.js"></script>
+    <script src="./public/jquery-jvectormap-world-mill.js"></script>
+    <!-- relative time -->
+    <script>
+      function timeSince(date) {
+        var seconds = Math.floor((new Date() - date) / 1000);
+
+        var interval = seconds / 31536000;
+
+        if (interval > 1) {
+          return Math.floor(interval) + " years";
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+          return Math.floor(interval) + " months";
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+          return Math.floor(interval) + " days";
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+          return Math.floor(interval) + " hours";
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+          return Math.floor(interval) + " minutes";
+        }
+        return Math.floor(seconds) + " seconds";
+      }
+    </script>
+    <script>
+      function buildImageUrl(path, size = "w300") {
+        let image_base = "https://image.tmdb.org/t/p/";
+        let image_size = size;
+        return image_base + image_size + path;
+      }
+      $.getJSON("./countries.json", function (data) {
+        let last_modified = data["last_modified"];
+        let last_modified_date = new Date(last_modified);
+        let last_modified_date_string =
+          timeSince(last_modified_date) +
+          " ago (" +
+          last_modified_date.toLocaleString() +
+          ")";
+        $("#last-modified").text(last_modified_date_string);
+
+        let countries = data["countries"];
+
+        // for map (see use below)
+        //  or see https://jvectormap.com/documentation/javascript-api/jvm-dataseries/
+        scale = {};
+        values = {};
+        countries_by_code = {};
+
+        for (let i = 0; i < countries.length; i++) {
+          let country = countries[i];
+          console.log(country);
+          countries_by_code[country["iso_3166_1"]] = country;
+
+          let top_movie = country["top_movie"];
+          if (top_movie == null) {
+            continue;
+          }
+          let movie_name = top_movie["title"];
+          let code = country["iso_3166_1"];
+          let backdrop_path = top_movie["backdrop_path"];
+          scale[movie_name] = buildImageUrl(backdrop_path);
+          values[code] = movie_name;
+        }
+
+        console.log(scale);
+        console.log(values);
+
+        new jvm.Map({
+          map: "world_mill",
+          container: $("#world-map"),
+          backgroundColor: "#254e8f",
+          series: {
+            regions: [
+              {
+                scale: scale,
+                values: values,
+              },
+            ],
+          },
+          onRegionTipShow: function (e, el, code) {
+            let country = countries_by_code[code];
+            if (country == null) {
+              return;
+            }
+            let top_movie = country["top_movie"];
+            if (top_movie == null) {
+              return;
+            }
+
+            let country_name = country["english_name"];
+
+            let movie_name = top_movie["title"];
+            let movie_poster = top_movie["poster_path"];
+            let poster_url = buildImageUrl(movie_poster, "original");
+
+            let html = `
+              <div class="tooltip">
+                <div class="tooltip-text">
+                  <h2>${country_name}</h2>
+                  <h3>${movie_name}</h3>
+                </div>
+                <div class="tooltip-image">
+                    <img src="${poster_url}" alt="${movie_name}" />
+                  </div>
+              </div>
+            `;
+
+            el.html(html);
+          },
+          onRegionClick: function (e, code) {
+            let country = countries_by_code[code];
+            if (country == null) {
+              return;
+            }
+            let top_movie = country["top_movie"];
+            if (top_movie == null) {
+              return;
+            }
+            let movie_name = top_movie["title"];
+            let movie_id = top_movie["id"];
+            let movie_url = "https://www.themoviedb.org/movie/" + movie_id;
+            window.open(movie_url, "_blank");
+          },
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <h1>Film map</h1>
+      <p>What's the most popular film in each country?</p>
+    </header>
+    <main>
+      <div id="world-map" style="width: 90%; height: 40rem"></div>
+    </main>
+    <footer>
+      <p>Last updated: <span id="last-modified"></span></p>
+      <nav>
+        <ul>
+          <li>
+            Data from
+            <a href="https://www.themoviedb.org/">The Movie Database</a>
+          </li>
+          <li>Map: <a href="https://jvectormap.com/">jVectorMap</a></li>
+          <li>
+            <a href="https://github.com/EkulRF/BestFilmsByCountry"
+              >Source (GitHub)</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  </body>
+</html>
