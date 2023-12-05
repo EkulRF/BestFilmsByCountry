@@ -29,7 +29,9 @@ main {
 }
 
 footer {
-  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 footer nav ul {
