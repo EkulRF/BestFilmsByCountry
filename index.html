@@ -104,8 +104,19 @@
 
             el.html(el.html() + " - " + movie_name);
           },
-          onRegionClick: function () {
-            console.log("selected");
+          onRegionClick: function (e, code) {
+            let country = countries_by_code[code];
+            if (country == null) {
+              return;
+            }
+            let top_movie = country["top_movie"];
+            if (top_movie == null) {
+              return;
+            }
+            let movie_name = top_movie["title"];
+            let movie_id = top_movie["id"];
+            let movie_url = "https://www.themoviedb.org/movie/" + movie_id;
+            window.open(movie_url, "_blank");
           },
         });
       });
