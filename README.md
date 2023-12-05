@@ -74,7 +74,7 @@ https://image.tmdb.org/t/p/original/tmU7GeKVybMWFButWEGl2M4GeiP.jpg
 https://image.tmdb.org/t/p/original/3bhkrj58Vtu7enYsRolD1fZdja1.jpg
 ```
 
-## Development
+## Development (data collection)
 
 ### Get API key
 
@@ -111,3 +111,7 @@ Data is saved to `countries.json`. A lot of countries do not have data (due to t
     {"iso_3166_1": "AL", "english_name": "Albania", "native_name": "Albania", "top_movie": {"id": 763788, "title": "Dangerous", "original_title": "Dangerous", "original_language": "en", "release_date": "2021-11-05", "genre_ids": [28, 53], "overview": "A reformed sociopath heads to a remote island after the death of his brother. Soon after his arrival, the island falls under siege from a deadly gang of mercenaries, and when he discovers their role in his brother\u2019s demise, he sets out on a relentless quest for vengeance.", "vote_average": 6.2, "vote_count": 386, "popularity": 27.343, "backdrop_path": "/mo57hzhW3BcZL1f7MNteWKHsmlN.jpg", "poster_path": "/vTtkQGC7qKlSRQJZYtAWAmYdH0A.jpg", "video": false, "adult": false}}
 ]
 ```
+
+## Development (frontend)
+
+The library for the SVG map is <https://jvectormap.com>.
