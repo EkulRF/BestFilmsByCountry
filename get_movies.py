@@ -3,6 +3,7 @@ import os
 from dataclasses import dataclass
 import json
 import datetime
+import pprint
 from typing import List, Optional
 import requests
 from dotenv import load_dotenv
@@ -70,31 +71,45 @@ def main():
     print("getting top film for each country...")
 
     pbar = tqdm(countries)
+    no_movies = []
     for country in pbar:
         pbar.set_description(f"getting top film for {country.english_name}...")
-        response = requests.get(
-            "https://api.themoviedb.org/3/discover/movie",
-            params={
-                "language": "en-US",
-                "api_key": api_key,
-                "page": 1,
-                "sort_by": "vote_average.desc",
-                "with_origin_country": country.iso_3166_1,
-                "vote_count.gte": 200,
-                # "without_genres": "99,10755", # exclude documentaries and ???
-            },
-            timeout=5,
-        )
+        for min_vote_count in [200, 100, 50, 10, 0]:
+            response = requests.get(
+                "https://api.themoviedb.org/3/discover/movie",
+                params={
+                    "language": "en-US",
+                    "api_key": api_key,
+                    "page": 1,
+                    "sort_by": "vote_average.desc",
+                    "with_origin_country": country.iso_3166_1,
+                    "vote_count.gte": min_vote_count,
+                    # "without_genres": "99,10755", # exclude documentaries and ???
+                },
+                timeout=5,
+            )
 
-        if response.status_code != 200:
-            raise requests.HTTPError(response.status_code)
-        response_json = json.loads(response.text)
-        total_pages = response_json["total_pages"]
-        total_results = response_json["total_results"]
-        movies = [Movie(**movie) for movie in response_json["results"]]
-        country.top_movie = movies[0] if movies else None
+            if response.status_code != 200:
+                raise requests.HTTPError(response.status_code)
+            response_json = json.loads(response.text)
+            total_pages = response_json["total_pages"]
+            total_results = response_json["total_results"]
+            try:
+                movies = [Movie(**movie) for movie in response_json["results"]]
+            except TypeError as e:
+                # missing data
+                no_movies.append((country, e))
+
+            if len(movies) > 0:
+                country.top_movie = movies[0]
+                break
+        else:
+            no_movies.append((country, "no movies found"))
 
     print("done")
+    if no_movies:
+        print(f"no movies found for {len(no_movies)} countries:")
+        pprint.pprint(no_movies)
 
     print("saving to file...")
     countries_json = json.loads(Country.schema().dumps(countries, many=True))
