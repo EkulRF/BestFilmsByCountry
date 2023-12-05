@@ -1,8 +1,14 @@
-import requests
+"""load data from The Movie Database (TMDB) to get the "top film per country" datasset"""
+import os
 import pickle
+import requests
 from tqdm import tqdm
 
-api_key = "[API Key]"
+from dotenv import load_dotenv
+
+load_dotenv()
+
+api_key = os.environ["TMDB_KEY"]
 base_url = "https://api.themoviedb.org/3"
 
 
