@@ -1,5 +1,6 @@
 """load data from The Movie Database (TMDB) to get the "top film per country" datasset"""
 import os
+import sys
 import pickle
 import requests
 from tqdm import tqdm
@@ -9,7 +10,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 api_key = os.environ["TMDB_KEY"]
-base_url = "https://api.themoviedb.org/3"
+BASE_URL = "https://api.themoviedb.org/3"
 
 
 def get_top_rated_movies_onpage(page):
@@ -19,7 +20,7 @@ def get_top_rated_movies_onpage(page):
         "page": page,
     }
 
-    response = requests.get(base_url + endpoint, params=params)
+    response = requests.get(BASE_URL + endpoint, params=params)
     if response.status_code == 200:
         return response.json().get("results", [])
     else:
