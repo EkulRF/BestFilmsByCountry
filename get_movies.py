@@ -25,7 +25,6 @@ class Movie:
     title: str
     original_title: str
     original_language: str
-    release_date: str
     genre_ids: List[int]
     overview: str
     vote_average: float
@@ -35,6 +34,7 @@ class Movie:
     poster_path: str
     video: bool
     adult: bool
+    release_date: Optional[str] = None
 
 
 @dataclass_json
