@@ -8,13 +8,47 @@
     <script src="./public/jquery-3.7.1.min.js"></script>
     <script src="./public/jquery-jvectormap-2.0.5.min.js"></script>
     <script src="./public/jquery-jvectormap-world-mill.js"></script>
+    <!-- relative time -->
+    <script>
+      function timeSince(date) {
+        var seconds = Math.floor((new Date() - date) / 1000);
+
+        var interval = seconds / 31536000;
+
+        if (interval > 1) {
+          return Math.floor(interval) + " years";
+        }
+        interval = seconds / 2592000;
+        if (interval > 1) {
+          return Math.floor(interval) + " months";
+        }
+        interval = seconds / 86400;
+        if (interval > 1) {
+          return Math.floor(interval) + " days";
+        }
+        interval = seconds / 3600;
+        if (interval > 1) {
+          return Math.floor(interval) + " hours";
+        }
+        interval = seconds / 60;
+        if (interval > 1) {
+          return Math.floor(interval) + " minutes";
+        }
+        return Math.floor(seconds) + " seconds";
+      }
+    </script>
     <script>
       $.getJSON("./countries.json", function (data) {
         let last_modified = data["last_modified"];
-        let countries = data["countries"];
+        let last_modified_date = new Date(last_modified);
+        let last_modified_date_string =
+          timeSince(last_modified_date) +
+          " ago (" +
+          last_modified_date.toLocaleString() +
+          ")";
+        $("#last-modified").text(last_modified_date_string);
 
-        let image_base = "https://image.tmdb.org/t/p/";
-        let image_size = "w300";
+        let countries = data["countries"];
 
         // for map (see use below)
         //  or see https://jvectormap.com/documentation/javascript-api/jvm-dataseries/
@@ -81,6 +115,7 @@
       <div id="world-map" style="width: 90%; height: 40rem"></div>
     </main>
     <footer>
+      <p>Last updated: <span id="last-modified"></span></p>
       <nav>
         <ul>
           <li>
