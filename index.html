@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Map!</title>
+    <link rel="stylesheet" href="./public/stylesheet.css" />
+    <link rel="stylesheet" href="./public/jquery-jvectormap-2.0.5.css" />
+    <script src="./public/jquery-3.7.1.min.js"></script>
+    <script src="./public/jquery-jvectormap-2.0.5.min.js"></script>
+    <script src="./public/jquery-jvectormap-world-mill.js"></script>
+    <script>
+      $.getJSON("./countries.json", function (data) {
+        let last_modified = data["last_modified"];
+        let countries = data["countries"];
+
+        let image_base = "http://image.tmdb.org/t/p/";
+        let image_size = "w300";
+
+        // for map (see use below)
+        //  or see https://jvectormap.com/documentation/javascript-api/jvm-dataseries/
+        scale = {};
+        values = {};
+        countries_by_code = {};
+
+        for (let i = 0; i < countries.length; i++) {
+          let country = countries[i];
+          console.log(country);
+          countries_by_code[country["iso_3166_1"]] = country;
+
+          let top_movie = country["top_movie"];
+          if (top_movie == null) {
+            continue;
+          }
+          let movie_name = top_movie["title"];
+          let code = country["iso_3166_1"];
+          let backdrop_path = top_movie["backdrop_path"];
+          scale[movie_name] = image_base + image_size + backdrop_path;
+          values[code] = movie_name;
+        }
+
+        console.log(scale);
+        console.log(values);
+
+        new jvm.Map({
+          map: "world_mill",
+          container: $("#world-map"),
+          series: {
+            regions: [
+              {
+                scale: scale,
+                values: values,
+              },
+            ],
+          },
+          onRegionTipShow: function (e, el, code) {
+            let country = countries_by_code[code];
+            if (country == null) {
+              return;
+            }
+            let top_movie = country["top_movie"];
+            if (top_movie == null) {
+              return;
+            }
+            let movie_name = top_movie["title"];
+
+            el.html(el.html() + " - " + movie_name);
+          },
+          onRegionClick: function () {
+            console.log("selected");
+          },
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <header>
+      <h1>Film map</h1>
+      <p>What's the most popular film in each country?</p>
+    </header>
+    <main>
+      <div id="world-map" style="width: 90%; height: 40rem"></div>
+    </main>
+    <footer>
+      <nav>
+        <ul>
+          <li>
+            Data from
+            <a href="https://www.themoviedb.org/">The Movie Database</a>
+          </li>
+          <li>
+            <a href="https://github.com/EkulRF/BestFilmsByCountry"
+              >Source (GitHub)</a
+            >
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  </body>
+</html>
