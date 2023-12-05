@@ -2,6 +2,7 @@
 import os
 from dataclasses import dataclass
 import json
+import datetime
 from typing import List, Optional
 import requests
 from dotenv import load_dotenv
@@ -96,8 +97,13 @@ def main():
     print("done")
 
     print("saving to file...")
+    countries_json = json.loads(Country.schema().dumps(countries, many=True))
+    jsonfile = {
+        "countries": countries_json,
+        "last_modified": datetime.datetime.now().isoformat(),
+    }
     with open(SAVE_TO, "w", encoding="utf-8") as f:
-        f.write(Country.schema().dumps(countries, many=True))
+        json.dump(jsonfile, f, ensure_ascii=False, indent=2)
     # to load
     # Person.schema().loads(people_json, many=True)
 
