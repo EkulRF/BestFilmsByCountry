@@ -95,11 +95,22 @@ def sort_movies_by_country(original_dict):
     return sorted_dict
 
 
-highest_rated_movies = get_highest_rated_movies(500)
+def main(num_top: int):
+    """main"""
+    highest_rated_movies = get_highest_rated_movies(num_top)
 
-sorted = sort_movies_by_country(highest_rated_movies)
+    _sorted = sort_movies_by_country(highest_rated_movies)
 
-with open("HighRankedMovies_ByCountry.pickle", "wb") as handle:
-    pickle.dump(sorted, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    with open("HighRankedMovies_ByCountry.pickle", "wb") as handle:
+        pickle.dump(_sorted, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-print(sorted.keys())
+    print(_sorted.keys())
+
+
+if __name__ == "__main__":
+    if len(sys.argv) == 2:
+        _num_top = int(sys.argv[1])
+    else:
+        print("Usage: python3 TMDB_Retrieval.py <num_top_films>")
+        sys.exit(1)
+    main(_num_top)
