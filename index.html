@@ -75,6 +75,24 @@
           let backdrop_path = top_movie["backdrop_path"];
           scale[movie_name] = buildImageUrl(backdrop_path);
           values[code] = movie_name;
+
+          fetch('/get_land_area', {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ iso_code: code }),
+          })
+          .then(response => response.json())
+          .then(data => {
+              console.log(`Land area for ${code}: ${data.land_area}`);
+
+              let landAreaValue = data.land_area;
+              
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
         }
 
         console.log(scale);
