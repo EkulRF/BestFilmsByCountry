@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Favicon -->
+    <link rel="icon" href="public/favicon.ico" type="image/x-icon">
     <meta charset="utf-8" />
     <title>Map!</title>
     <link rel="stylesheet" href="./public/stylesheet.css" />
@@ -108,11 +110,11 @@
           regionStyle: {
           initial : {
           stroke : "black",
-          "stroke-width" : 0.5,
+          "stroke-width" : 0.7,
           "stroke-opacity" : 1
         },
         hover : {
-          "stroke-width" : 1,
+          "stroke-width" : 1.2,
         },
         selectedHover : {}
       },
@@ -147,7 +149,7 @@
                   <h3>${movie_name}</h3>
                 </div>
                 <div class="tooltip-image">
-                    <img src="${poster_url}" alt="${movie_name}" style="width: 10px; height: auto; display: block; margin: 0 auto;" />
+                    <img src="${poster_url}" alt="${movie_name}" />
                   </div>
               </div>
             `;
