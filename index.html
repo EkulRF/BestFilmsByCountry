@@ -75,7 +75,8 @@
           let backdrop_path = top_movie["backdrop_path"];
           scale[movie_name] = buildImageUrl(backdrop_path);
           values[code] = movie_name;
-
+          
+          /////////////////////
           fetch('/get_land_area', {
               method: 'POST',
               headers: {
@@ -88,12 +89,14 @@
               console.log(`Land area for ${code}: ${data.land_area}`);
 
               let landAreaValue = data.land_area;
-              
+
           })
           .catch(error => {
               console.error('Error:', error);
           });
         }
+        //////////////////
+
 
         console.log(scale);
         console.log(values);
@@ -101,7 +104,7 @@
         new jvm.Map({
           map: "world_mill",
           container: $("#world-map"),
-          backgroundColor: "#254e8f",
+          backgroundColor: "#4c5c75",
           series: {
             regions: [
               {
@@ -160,8 +163,8 @@
   </head>
   <body>
     <header>
-      <h1>Film map</h1>
-      <p>What's the most popular film in each country?</p>
+      <h1>The World By Cinema</h1>
+      <p>What's the most popular film from each country?</p>
     </header>
     <main>
       <div id="world-map" style="width: 90%; height: 40rem"></div>
