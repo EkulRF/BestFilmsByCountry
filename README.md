@@ -1,10 +1,10 @@
 # Best Films by Country
 
-Using [The Movie Database API](https://developer.themoviedb.org/reference/intro/getting-started) to map out the top-rated movie for each global country.
+Using [The Movie Database API](https://developer.themoviedb.org/reference/intro/getting-started) to map out the top-rated movie made in each country.
 
 ## Information
 
-### How do you get the "top movie" for a country?
+### How do you get the "top movie" from a country?
 
 Using the "discover" API from The Movie Database (TMDB) <`https://developer.themoviedb.org/reference/discover-movie`> with query parameters:
 
