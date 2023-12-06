@@ -105,6 +105,17 @@
           map: "world_mill",
           container: $("#world-map"),
           backgroundColor: "#4c5c75",
+          regionStyle: {
+          initial : {
+          stroke : "black",
+          "stroke-width" : 0.5,
+          "stroke-opacity" : 1
+        },
+        hover : {
+          "stroke-width" : 1,
+        },
+        selectedHover : {}
+      },
           series: {
             regions: [
               {
