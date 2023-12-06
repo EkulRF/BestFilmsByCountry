@@ -38,7 +38,7 @@
       }
     </script>
     <script>
-      function buildImageUrl(path, size = "w400") {
+      function buildImageUrl(path, size = "w300") {
         let image_base = "https://image.tmdb.org/t/p/";
         let image_size = size;
         return image_base + image_size + path;
@@ -147,7 +147,7 @@
                   <h3>${movie_name}</h3>
                 </div>
                 <div class="tooltip-image">
-                    <img src="${poster_url}" alt="${movie_name}" />
+                    <img src="${poster_url}" alt="${movie_name}" style="width: 300px; height: auto;" />
                   </div>
               </div>
             `;
