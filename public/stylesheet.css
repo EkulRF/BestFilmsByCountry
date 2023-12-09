@@ -53,14 +53,8 @@ footer nav ul li {
   border-radius: 0.5rem;
 }
 
-.tooltip-image {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .tooltip-image img {
-  width: auto;
+  width: 10rem;
   height: auto;
 }
 
