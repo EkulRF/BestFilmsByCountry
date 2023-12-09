@@ -6,7 +6,9 @@ html,
 body {
   margin: 0;
   padding: 0;
-  font-family: "Roboto", sans-serif;
+  font-family: "Georgia", serif;
+  text-align: center;
+  color: '#f2f2f2'
 }
 
 body {
@@ -49,7 +51,7 @@ footer nav ul li {
 
 .jvectormap-tip.jvectormap-tip {
   border: none;
-  background: #0008;
+  background: #6e7470;
   border-radius: 0.5rem;
 }
 
